@@ -1,0 +1,158 @@
+/* styles.css */
+:root {
+  --color-bg: #121212; /* Dark black background */
+  --color-bg-card: #1e1e1e; /* Slightly lighter card background */
+  --color-text: #ffffff; /* White text */
+  --color-red: #f56565; /* Primary red */
+  --color-red-hover: #d53f3f; /* Hover red */
+  --color-red-focus: #9b2c2c; /* Focus red */
+  --color-gray-dark: #2c2c2c; /* Dark gray for inputs */
+  --color-gray-border: #333333; /* Gray for borders */
+  --color-gray-placeholder: #aaaaaa; /* Placeholder text color */
+  --font-family: 'Roboto', sans-serif; /* Default font */
+}
+
+/* Global styles */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Container styles */
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.bg-black {
+  background-color: var(--color-bg);
+}
+
+.bg-gray-900 {
+  background-color: var(--color-bg-card);
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Typography */
+.text-white {
+  color: var(--color-text);
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.text-red-400 {
+  color: var(--color-red);
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.text-gray-400 {
+  color: var(--color-gray-placeholder);
+}
+
+.link {
+  color: var(--color-red);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.link:hover {
+  color: var(--color-red-hover);
+  text-decoration: underline;
+}
+
+/* Input fields */
+input {
+  width: 90%;
+  height: 2.75rem;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-gray-border);
+  background-color: var(--color-gray-dark);
+  color: var(--color-text);
+  transition: all 0.3s ease-in-out;
+}
+
+input::placeholder {
+  color: var(--color-gray-placeholder);
+}
+
+input:focus {
+  border-color: var(--color-red);
+  box-shadow: 0 0 0 2px var(--color-red-focus);
+  outline: none;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  background-color: var(--color-red);
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: var(--color-red-hover);
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-red-focus);
+}
+
+button:active {
+  background-color: var(--color-red-focus);
+}
+
+/* Card styles */
+.bg-gray-900 {
+  padding: 2rem;
+  border-radius: 0.75rem;
+  background-color: var(--color-bg-card);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Spacing utilities */
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.space-y-4 {
+  margin-bottom: 1rem;
+}
+
+/* Link container */
+.link-container {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+}
