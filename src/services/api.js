@@ -1,19 +1,35 @@
 import axios from "axios";
 
-const API = axios.create({
-  baseURL: "http://127.0.0.1:8000", // Backend URL
+// API Clients for Both Services
+const authAPI = axios.create({
+  baseURL: "http://127.0.0.1:8000", // Auth Service
 });
 
-// Interceptor to include tokens in requests
-API.interceptors.request.use((config) => {
-  const token = localStorage.getItem("access_token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+const questionnaireAPI = axios.create({
+  baseURL: "http://127.0.0.1:8001", // Questionnaire Service
 });
 
-export const registerUser = (data) => API.post("/auth/register", data);
-export const loginUser = (data) => API.post("/auth/login", data);
+// Add Token Interceptor for Both APIs
+const addAuthInterceptor = (apiInstance) => {
+  apiInstance.interceptors.request.use((config) => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  });
+};
 
-export default API;
+addAuthInterceptor(authAPI);
+addAuthInterceptor(questionnaireAPI);
+
+// Authentication Endpoints
+export const registerUser = (data) => authAPI.post("/auth/register", data);
+export const loginUser = (data) => authAPI.post("/auth/login", data);
+
+// Questionnaire Endpoints
+export const submitQuestionnaire = (data) => questionnaireAPI.post("/questionnaire/submit", data);
+export const getQuestionnaire = () => questionnaireAPI.get("/questionnaire/get");
+
+// Export API instances for debugging if needed
+export { authAPI, questionnaireAPI };
