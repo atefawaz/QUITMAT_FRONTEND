@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; // Import Link for navigation
+import { useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../services/api";
 import "../styles/auth.css"; // Ensure your styles are linked
 
@@ -23,12 +23,19 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await registerUser(formData);
-      setMessage("Registration successful! Redirecting to login...");
+      console.log("Registration Form Data Sent to API:", formData);
+
+      const response = await registerUser(formData);
+      
+      // Store token in localStorage
+      localStorage.setItem("access_token", response.data.access_token);
+
+      setMessage("Registration successful! Redirecting to questionnaire...");
       setTimeout(() => {
-        navigate("/");
+        navigate("/questionnaire"); // Redirect to Questionnaire page
       }, 1000);
     } catch (error) {
+      console.error("Error Response:", error.response?.data);
       const errorMsg = error.response?.data?.detail || "An error occurred.";
       setMessage(
         typeof errorMsg === "string" ? errorMsg : JSON.stringify(errorMsg)

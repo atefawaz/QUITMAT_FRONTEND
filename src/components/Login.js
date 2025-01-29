@@ -19,13 +19,22 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await loginUser(formData);
+      console.log("Form Data Sent to API:", {
+        email: formData.email, // Map "email" to "username"
+        password: formData.password,
+      });
+
+      const response = await loginUser({
+        email: formData.email, // Ensure you're sending "username" and not "email"
+        password: formData.password,
+      });
       localStorage.setItem("access_token", response.data.access_token);
       setMessage("Login successful!");
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
     } catch (error) {
+      console.error("Error Response:", error.response?.data);
       const errorMsg = error.response?.data?.detail || "Invalid credentials.";
       setMessage(
         typeof errorMsg === "string" ? errorMsg : JSON.stringify(errorMsg)
