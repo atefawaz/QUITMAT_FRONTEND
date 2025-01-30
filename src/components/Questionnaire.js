@@ -18,21 +18,26 @@ function Questionnaire() {
     smoking_context: [],
   });
 
+  const quittingSpeedOptions = ["gradual", "cold_turkey", "assisted", "tapering_off"];
+  const highRiskTimesOptions = ["morning", "after_meals", "evening", "social_events", "work_stress"];
+  const smokingTriggersOptions = ["stress", "boredom", "peer_pressure", "alcohol", "coffee", "driving"];
+  const previousMethodsOptions = ["nicotine_patch", "therapy", "vaping", "medication", "support_groups"];
+  const healthGoalsOptions = ["improve_lung_health", "fitness", "save_money", "better_sleep"];
+
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  // Handle Toggle Button Selections for multi-choice fields
+  // Handle option selection for multi-select fields
   const handleToggle = (field, value) => {
     setFormData((prev) => {
       let updatedValue;
       if (Array.isArray(prev[field])) {
-        // Multi-select toggle logic
         updatedValue = prev[field].includes(value)
-          ? prev[field].filter((item) => item !== value) // Remove if selected
-          : [...prev[field], value]; // Add if not selected
+          ? prev[field].filter((item) => item !== value)
+          : [...prev[field], value];
       } else {
-        updatedValue = value; // Single-select fields
+        updatedValue = value;
       }
       return { ...prev, [field]: updatedValue };
     });
@@ -65,14 +70,19 @@ function Questionnaire() {
     setIsSubmitting(true);
 
     try {
-      const response = await submitQuestionnaire(formData);
+      const token = localStorage.getItem("access_token");
+      if (!token) {
+        setMessage("Authentication error. Please log in again.");
+        return;
+      }
+
+      const response = await submitQuestionnaire(formData, token);
       console.log("Questionnaire submitted:", response.data);
 
-      setMessage("Questionnaire submitted successfully! Redirecting to login...");
+      setMessage("Questionnaire submitted successfully! Redirecting to dashboard...");
       setTimeout(() => navigate("/"), 2000);
     } catch (error) {
       console.error("Error Response:", error.response?.data);
-
       const errorMsg = error.response?.data?.detail || "An unexpected error occurred.";
       setMessage(typeof errorMsg === "string" ? errorMsg : JSON.stringify(errorMsg));
     } finally {
@@ -97,7 +107,7 @@ function Questionnaire() {
           {/* Quitting Speed */}
           <label className="questionnaire-label">Quitting Speed:</label>
           <div className="toggle-group">
-            {["gradual", "cold_turkey"].map((option) => (
+            {quittingSpeedOptions.map((option) => (
               <button
                 type="button"
                 key={option}
@@ -112,7 +122,7 @@ function Questionnaire() {
           {/* High Risk Times */}
           <label className="questionnaire-label">High Risk Times:</label>
           <div className="toggle-group">
-            {["morning", "after_meals", "evening", "social_events"].map((option) => (
+            {highRiskTimesOptions.map((option) => (
               <button
                 type="button"
                 key={option}
@@ -146,7 +156,7 @@ function Questionnaire() {
           {/* Smoking Triggers */}
           <label className="questionnaire-label">Smoking Triggers:</label>
           <div className="toggle-group">
-            {["stress", "habit", "peer_pressure"].map((option) => (
+            {smokingTriggersOptions.map((option) => (
               <button
                 type="button"
                 key={option}
@@ -167,7 +177,7 @@ function Questionnaire() {
           {/* Previous Methods */}
           <label className="questionnaire-label">Previous Methods:</label>
           <div className="toggle-group">
-            {["nicotine_patch", "therapy", "medication"].map((option) => (
+            {previousMethodsOptions.map((option) => (
               <button
                 type="button"
                 key={option}
