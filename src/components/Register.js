@@ -23,25 +23,27 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("Registration Form Data Sent to API:", formData);
-
+      console.log("📢 Registering user:", formData);
+  
       const response = await registerUser(formData);
-      
-      // Store token in localStorage
-      localStorage.setItem("access_token", response.data.access_token);
-
+      console.log("✅ Registration Successful:", response.data);
+  
+      // ✅ Extract `id` and store it as `user_id`
+      const { access_token, id } = response.data; 
+      localStorage.setItem("access_token", access_token);
+      localStorage.setItem("user_id", id); // ✅ Store as user_id
+  
       setMessage("Registration successful! Redirecting to questionnaire...");
       setTimeout(() => {
-        navigate("/questionnaire"); // Redirect to Questionnaire page
+        navigate("/questionnaire");
       }, 1000);
     } catch (error) {
-      console.error("Error Response:", error.response?.data);
-      const errorMsg = error.response?.data?.detail || "An error occurred.";
-      setMessage(
-        typeof errorMsg === "string" ? errorMsg : JSON.stringify(errorMsg)
-      );
+      console.error("❌ Registration Failed:", error.response?.data);
+      const errorMsg = error.response?.data?.detail || "Something went wrong.";
+      setMessage(typeof errorMsg === "string" ? errorMsg : JSON.stringify(errorMsg));
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center h-screen bg-black">
