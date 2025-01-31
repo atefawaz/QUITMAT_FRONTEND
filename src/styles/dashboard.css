@@ -1,0 +1,169 @@
+/* ✅ Root Variables */
+:root {
+    --color-bg: #121212;
+    --color-bg-card: #1e1e1e;
+    --color-text: #ffffff;
+    --color-red: #f56565;
+    --color-red-hover: #d53f3f;
+    --color-red-focus: #9b2c2c;
+    --color-gray-dark: #2c2c2c;
+    --color-gray-border: #444;
+    --color-gray-placeholder: #bbbbbb;
+    --font-family: "Roboto", sans-serif;
+}
+
+/* ✅ Apply Dashboard-specific styles */
+.dashboard-body {
+    background-color: #181818; /* Dark mode background */
+    color: white;
+    font-family: "Roboto", sans-serif;
+    display: block;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+/* ✅ Main Dashboard Container */
+.dashboard-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    background: var(--color-bg-card);
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* ✅ Title */
+.title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: var(--color-text);
+}
+
+/* ✅ Quit Plan Info Box */
+.plan-info {
+    background: #222;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* ✅ Calendar Layout (Grid for Daily Targets) */
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+/* ✅ Individual Day Cards */
+.day-card {
+    background: var(--color-gray-dark);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 2px 8px rgba(255, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
+    cursor: pointer;
+    position: relative;
+}
+
+.day-card:hover {
+    transform: translateY(-5px);
+}
+
+/* ✅ Completed Days (Click to Mark Done) */
+.day-card.completed {
+    background: var(--color-red-hover);
+    color: var(--color-text);
+}
+
+/* ✅ "X" Mark for Completed Days */
+.completed-mark {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    transition: transform 0.2s ease-in-out;
+}
+
+.day-card.completed .completed-mark {
+    transform: scale(1.2);
+    color: #fff;
+}
+
+/* ✅ Day Label */
+.day-label {
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--color-red);
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* ✅ Cigarette Count */
+.cigarette-count {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--color-red-hover);
+}
+
+/* ✅ Info Sections (Strategies & Reminders) */
+.info-section {
+    margin-top: 25px;
+    text-align: left;
+    background: var(--color-gray-dark);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.info-section h2 {
+    font-size: 22px;
+    color: white;
+    border-bottom: 2px solid var(--color-red);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.info-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.info-section ul li {
+    background: #333;
+    padding: 12px;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.info-section ul li:hover {
+    background: var(--color-red-hover);
+    color: white;
+}
+
+/* ✅ Loading & Error Messages */
+.loading {
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.error {
+    font-size: 18px;
+    color: var(--color-red);
+}
+
+.no-plan {
+    font-size: 18px;
+    color: var(--color-gray-placeholder);
+}

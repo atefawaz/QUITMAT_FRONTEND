@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; // Import Link for navigation
+import { useNavigate, Link } from "react-router-dom"; 
 import { loginUser } from "../services/api";
-import "../styles/auth.css"; // Ensure your styles are linked
+import "../styles/auth.css"; 
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -20,15 +20,29 @@ function Login() {
     e.preventDefault();
     try {
       console.log("Form Data Sent to API:", {
-        email: formData.email, // Map "email" to "username"
+        email: formData.email, 
         password: formData.password,
       });
-
+  
       const response = await loginUser({
-        email: formData.email, // Ensure you're sending "username" and not "email"
+        email: formData.email, 
         password: formData.password,
       });
-      localStorage.setItem("access_token", response.data.access_token);
+  
+      console.log("✅ Full API Response:", response.data); // ✅ Debugging log
+  
+      const { access_token, user_num_id } = response.data; // ✅ Extract correct user ID key
+  
+      if (!user_num_id) {
+        throw new Error("User ID is missing from response!"); // ✅ Handle missing user ID
+      }
+  
+      // ✅ Store access_token and user_num_id correctly
+      localStorage.setItem("access_token", access_token);
+      localStorage.setItem("user_num_id", user_num_id.toString());
+  
+      console.log("✅ Storing in localStorage:", { access_token, user_num_id });
+  
       setMessage("Login successful!");
       setTimeout(() => {
         navigate("/dashboard");
@@ -41,6 +55,9 @@ function Login() {
       );
     }
   };
+  
+  
+  
 
   return (
     <div className="flex items-center justify-center h-screen bg-black">
